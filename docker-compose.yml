@@ -10,20 +10,10 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: ajax
-    redis:
-        image: redis:alpine
-        ports:
-            - 6379:6379
-    memcached:
-        image: memcached:alpine
-        ports:
-            - 11211:11211
     php:
         build: php
         links:
             - db:mysqldb
-            - redis
-            - memcached
         volumes:
             - ./www:/var/www/ajax
             - ./logs/ajax:/var/www/ajax/logs
@@ -33,7 +23,6 @@ services:
             - 8081:80
         links:
             - php
-            - redis
         volumes_from:
             - php
         volumes:
